@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rude Box FX Soundboard v2 - Because even spreadsheets deserve a soundtrack.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+    <style>
+        @keyframes wiggle {
+            0%,
+            100% { transform: rotate(0deg);  }
+            10%  { transform: rotate(2deg);  }
+            20%,
+            40%,
+            60%  { transform: rotate(-4deg); }
+            30%,
+            50%,
+            70%  { transform: rotate(4deg);  }
+            80%  { transform: rotate(-2deg); }
+            90%  { transform: rotate(2deg);  }
+        }
+        
+        :root {
+            font-size           : 100%;
+            --font-size         : 1rem;
+            --size-button       : 10rem;
+            --size-gap          : 0.5rem;
+            --size-border-radius: 1em;
+            --color-background  : rgba(18, 18, 18, 1);
+            --color-font        : rgba(255, 255, 255, 0.9);
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: "DM Sans", sans-serif;
+            font-size: var(--font-size);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 1rem;
+            background: var(--color-background);
+            transition: font-size 0.2s ease-out;
+        }
+        button {
+            cursor: pointer;
+            background: transparent;
+            border: 0;
+        }
+        .container {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            row-gap: 2rem;
+        }
+        #soundboard {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: var(--size-gap);
+        }
+        #soundboard button {
+            position: relative;
+            font-family: "DM Sans", sans-serif;
+            width: var(--size-button);
+            height: var(--size-button);
+            padding: 2em;
+            font-size: var(--font-size);
+            font-weight: 300;
+            background: rgba(255, 255, 255, 0.07);
+            color: var(--color-font);
+            border: none;
+            border-radius: var(--size-border-radius);
+            transition: background 0.25s ease-in-out;
+        }
+        #soundboard button:not(.is-playing):hover {
+            background: linear-gradient(70deg,rgba(207, 61, 210, 1) -0.25%,rgba(255, 77, 81, 1) 49.26%,rgba(242, 123, 30, 1) 100%);
+            box-shadow: 0px 0px 50px 0px rgba(207, 61, 210, 0.7);
+        }
+        #soundboard button.is-playing {
+            background: linear-gradient(to top, rgba(11, 163, 96, 1) 0%, rgba(60, 186, 146, 1) 100%);
+            box-shadow: 0px 0px 50px 0px rgba(60, 186, 146, 0.7);
+        }
+        #soundboard button .shortkey {
+            position: absolute;
+            top: 0.75rem;
+            left: 0.75rem;
+            font-weight: 800;
+            opacity: 0.25;
+        }
+        #soundboard button.creator-micro::after {
+            content: '';
+            position: absolute;
+            bottom: 0.75rem;
+            right: 0.75rem;
+            width: 0.75em;
+            height: 0.75em;
+            border-radius: 1rem;
+            background-color: var(--color-font);
+            opacity: 0.5;
+        }
+        #randomizer {
+            width: 2.5rem;
+            height: auto;
+            color: var(--color-font);
+        }
+        #randomizer:hover {
+            animation: wiggle 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
+        }
+
+        @media (min-width: 64em) {
+            #soundboard {
+                display: grid;
+                grid-template-columns: repeat(6, 1fr);
+                justify-content: center;
+                
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="soundboard"></div>
+        <button id="randomizer" type="button" title="I feel lucky">
+            <svg viewBox="0 0 32 32" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.125em">
+                <path fill="currentcolor" fill-rule="nonzero" stroke="none" stroke-width="1" d="M7.38 5.555l15.592-1.367A3.419 3.419 0 0126.673 7.3L28.05 23.06a3.422 3.422 0 01-3.106 3.71L9.352 28.137a3.419 3.419 0 01-3.702-3.113L4.275 9.265a3.422 3.422 0 013.106-3.71zm.2 2.274a1.14 1.14 0 00-1.036 1.237l1.375 15.759a1.14 1.14 0 001.234 1.038l15.591-1.368a1.14 1.14 0 001.036-1.236l-1.376-15.76a1.14 1.14 0 00-1.234-1.037L7.58 7.829zm3.254 5.39a1.69 1.69 0 01-1.825-1.545 1.692 1.692 0 011.53-1.84 1.69 1.69 0 011.825 1.546 1.692 1.692 0 01-1.53 1.839zm10.065-.883a1.69 1.69 0 01-1.826-1.545 1.692 1.692 0 011.53-1.84 1.69 1.69 0 011.825 1.546 1.692 1.692 0 01-1.53 1.84zM11.72 23.373a1.69 1.69 0 01-1.825-1.545 1.692 1.692 0 011.53-1.84 1.69 1.69 0 011.825 1.545 1.692 1.692 0 01-1.53 1.84zm10.065-.883a1.69 1.69 0 01-1.825-1.545 1.692 1.692 0 011.53-1.84 1.69 1.69 0 011.825 1.546 1.692 1.692 0 01-1.53 1.84zm-5.476-4.635a1.69 1.69 0 01-1.825-1.546 1.692 1.692 0 011.53-1.839 1.69 1.69 0 011.825 1.545 1.692 1.692 0 01-1.53 1.84zM29.183 6.823l-.015.002A.915.915 0 0128.167 6c-.265-2.544-2.523-4.39-5.045-4.121h-.007a.916.916 0 01-1.002-.824.922.922 0 01.808-1.018h.002l.007-.001a6.387 6.387 0 014.718 1.408 6.498 6.498 0 012.347 4.363.922.922 0 01-.812 1.016zM8.547 32h-.008a6.395 6.395 0 01-4.578-1.818 6.51 6.51 0 01-1.96-4.553.92.92 0 01.895-.942h.016c.503-.008.917.4.926.91.044 2.559 2.134 4.595 4.67 4.55h.006a.918.918 0 01.927.91.92.92 0 01-.894.943z"></path>
+            </svg>
+        </button>
+    </div>
+    <script>
+        /**
+         * New in version version 2: you can now use shortkeys for buttons and connect the creatorMicro for ultimate awesomeness.
+        */
+        
+        /* 
+           array of sound objects with file name and label name
+           CHANGE THE SOUND ARRAY FOR YOUR OWN SOUNDS
+           
+           fileName: name of the file
+           label: name in the grid
+           shortkey: keyboard key to use to play the sound
+           creatorMicro: available for the Work Loud Creator Micro (only visual)
+        */
+        const sounds = [
+            {fileName: 'raarrr.mp3', label: 'Raarrr', shortkey: 'a', creatorMicro: true},
+            {fileName: 'dat-is-m-fantastisch-gedaan-zo.mp3', label: 'Dat is m, fantastisch gedaan zo', shortkey: 'b', creatorMicro: false},
+            {fileName: 'we-can\'t-allow-it-to-fail.mp3', label: 'We can\'t allow it to fail', shortkey: 'c', creatorMicro: true},
+            {fileName: 'technologia.mp3', label: 'Technologia', shortkey: 'd', creatorMicro: false},
+            {fileName: 'it-giet-oan.mp3', label: 'It giet oan', shortkey: 'e', creatorMicro: false},
+            {fileName: 'wat-een-bedrijf.mp3', label: 'Wat een bedrijf', shortkey: 'f', creatorMicro: true},
+            {fileName: 'joh-laat-gaan.mp3', label: 'Joh, laat gaan', shortkey: 'g', creatorMicro: true},
+            {fileName: 'lekker-lekker-lekker.mp3', label: 'Lekker, lekker, lekker', shortkey: 'h', creatorMicro: false},
+            {fileName: 'nee-is-nee.mp3', label: 'Nee is nee', shortkey: 'i', creatorMicro: false},
+            {fileName: 'schitterend-bedrijf.mp3', label: 'Schitterend bedrijf', shortkey: 'j', creatorMicro: true},
+            {fileName: 'tempo-beetje-opschroeven.mp3', label: 'Tempo beetje opschroeven', shortkey: 'k', creatorMicro: false},
+            {fileName: 'volledig-ongevraagd-die-tips.mp3', label: 'Volledig ongevraagd die tips', shortkey: 'l', creatorMicro: false},
+            {fileName: 'wat-heb-ie-nou-weer-voor-schoenen-aan.mp3', label: 'Wat heb ie nou weer voor schoenen aan?', shortkey: 'm', creatorMicro: true},
+            {fileName: 'voor-mekaar-hoor-ajeto.mp3', label: 'Voor mekaar hoor, Ajeto', shortkey: 'n', creatorMicro: true},
+            {fileName: 'nou-die-is-naar-de-gallemiezen.mp3', label: 'Nou die is naar de gallemiezen', shortkey: 'o', creatorMicro: true},
+            {fileName: 'lekker-genieten-vriend.mp3', label: 'Lekker genieten vriend', shortkey: 'p', creatorMicro: false},
+            {fileName: 'hier-is-helemaal-zand.mp3', label: 'Hier is helemaal zand', shortkey: 'q', creatorMicro: false},
+            {fileName: 'rustaagh.mp3', label: 'Rustaagh', shortkey: 'r', creatorMicro: true},
+            {fileName: 'ok-lets-go.mp3', label: 'Ok, let\'s go', shortkey: 's', creatorMicro: false},
+            {fileName: 'ik-vind-niet-normaal-maar-komt-goed.mp3', label: 'Ik vind niet normaal maar komt goed', shortkey: 't', creatorMicro: false},
+            {fileName: 'jezus-man-wat-een-rotzooi.mp3', label: 'Jezus man wat een rotzooi', shortkey: 'u', creatorMicro: true},
+            {fileName: 'stift-elleboog-op-tafel.mp3', label: 'Stift, elleboog op tafel', shortkey: 'v', creatorMicro: false},
+            {fileName: 'dat-vink-goed-gewoon-goed.mp3', label: 'Dat vink goed', shortkey: 'w', creatorMicro: true},
+            {fileName: 'ga-een-behoorlijke-baan-zoeken-man.mp3', label: 'Ga een behoorlijke baan zoeken man', shortkey: 'x', creatorMicro: true}
+        ];
+
+        /* 
+           The heart of the machine
+           DON'T NEED TO CHANGE STUFF BELOW
+        */
+        
+        // variables
+        var soundboardButtons = [];
+        var currentAudio;
+        const soundboard = document.querySelector('#soundboard');
+
+        // preload audio files
+        var audioElements = sounds.map(sound => {
+            const audio = new Audio(`fx/${sound.fileName}`);
+            audio.preload = 'auto';
+            return audio;
+        });
+
+        // add keypress listener
+        document.addEventListener('keydown', (event) => {
+            keypressToIndex(event.key.toLowerCase());
+        });
+
+        // function to create a button
+        function createButton(sound, index)
+        {
+            const button = document.createElement('button');
+            button.setAttribute("type", "button");
+            button.textContent = sound.label;
+
+            // create span element for the shortkey and append it to the button
+            const shortkeySpan = document.createElement('span');
+            shortkeySpan.classList.add('shortkey');
+            shortkeySpan.textContent = sound.shortkey;
+            button.appendChild(shortkeySpan);
+
+            // add creator-micro class to button when it is connected to a creator micro pad
+            if(sound.creatorMicro)
+            {
+                button.classList.add('creator-micro');
+            }
+
+            // add click listener
+            button.addEventListener('click', () => playSound(index));
+            return button;
+        }
+
+        // function to play the sounds
+        function playSound(index)
+        {
+            const audio = audioElements[index];
+            const button = soundboardButtons[index];
+            
+            // play new audio
+            button.classList.add('is-playing');
+            audio.play();
+            audio.addEventListener('ended', () => {
+                button.classList.remove('is-playing');
+            });
+
+            currentAudio = audio;
+        }
+
+        // function to pick a random button and play the sound
+        function iFeelLucky()
+        {
+            const randomIndex  = Math.floor(Math.random() * sounds.length);
+            playSound(randomIndex);
+        }
+        
+        // function to transform keypress in to index
+        function keypressToIndex(key)
+        {
+            // check spacebar and play random
+            if(key === " ")
+            {
+                iFeelLucky();
+                return true;
+            }
+
+            // find the sound that matches the pressed key
+            const soundIndex = sounds.findIndex(sound => sound.shortkey === key);
+            
+            // play the sound if a matching shortkey is found
+            if (soundIndex !== -1)
+            {
+                playSound(soundIndex);
+            }
+        }
+
+        // add buttons to the soundboard and the array
+        sounds.forEach((sound, index) => {
+            const button = createButton(sound, index);
+            soundboard.appendChild(button);
+            soundboardButtons.push(button);
+        });
+
+        // create the I feel lucky
+        const randomizerBtn = document.querySelector('#randomizer');
+        randomizerBtn.addEventListener('click', () => iFeelLucky());
+
+    </script>
+</body>
+</html>
