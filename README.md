@@ -53,8 +53,8 @@ const sounds = [
 
 1. Add your own sound files to the "fx" folder
 2. Change the sound array to make your own sounds work
-    **fileName**: name of the file
-    **label**: name in the grid
-    **shortkey**: keyboard key to use to play the sound
-    **creatorMicro**: available for the Work Loud Creator Micro (only visual)
-3. Have fun!
+3. **fileName**: name of the file
+4. **label**: name in the grid
+5. **shortkey**: keyboard key to use to play the sound
+6. **creatorMicro**: available for the Work Loud Creator Micro (only visual)
+7. Have fun!
