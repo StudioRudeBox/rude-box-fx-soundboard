@@ -9,7 +9,7 @@ Turn boring cubicles into booming concert halls. Summon chaos with a keystroke. 
 ## 🤔 What is this madness?
 
 **Rude Box FX Soundboard** is a humble but mighty web-based soundboard. It’s perfect for:
-- Celebrating a successful Excel VLOOKUP
+- When you just created an epic SQL query
 - Mourning a failed Power BI refresh
 - Providing live commentary for Teams meetings
 - Driving HR slightly insane
