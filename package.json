@@ -1,0 +1,29 @@
+{
+  "name": "rude-box-fx-soundboard",
+  "version": "1.0.0",
+  "description": "Because even spreadsheets deserve a soundtrack.",
+  "main": "electron-main.js",
+  "scripts": {
+    "start": "electron .",
+    "serve": "npx serve .",
+    "build": "electron-builder"
+  },
+  "devDependencies": {
+    "electron": "^35.0.0",
+    "electron-builder": "^25.0.0"
+  },
+  "build": {
+    "appId": "com.rudebox.soundboard",
+    "productName": "Rude Box FX Soundboard",
+    "win": {
+      "target": "portable"
+    },
+    "files": [
+      "electron-main.js",
+      "soundboard.html",
+      "assets/**",
+      "fx/**"
+    ]
+  },
+  "license": "MIT"
+}

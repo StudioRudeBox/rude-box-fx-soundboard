@@ -1,4 +1,7 @@
 /fx/*.mp3
 /fx/*.json
 /fx-archive/
+/.claude/
+/dist/
+/node_modules/
 CLAUDE.md
