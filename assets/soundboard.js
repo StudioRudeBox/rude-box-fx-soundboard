@@ -29,7 +29,7 @@ var soundboardButtons = [];
 const soundboard = document.querySelector('#soundboard');
 
 var audioElements = sounds.map(sound => {
-    const audio = new Audio(`.fx/${sound.fileName}`);
+    const audio = new Audio(`fx/${sound.fileName}`);
     audio.preload = 'auto';
     return audio;
 });

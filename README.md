@@ -41,35 +41,34 @@ Open `soundboard.html` directly in a browser — no build step, no server, no pa
 | File | Purpose |
 |------|---------|
 | `soundboard.html` | Main HTML structure |
-| `soundboard.css` | Styles, layout, and the gradient background effect |
-| `soundboard.js` | Sound config, button generation, and playback logic |
-| `.fx/` | Your local MP3 sound files (git-ignored) |
+| `assets/soundboard.css` | Styles, layout, and the gradient background effect |
+| `assets/soundboard.js` | Sound config, button generation, and playback logic |
+| `fx/` | Your local MP3 sound files (git-ignored) |
 
 ### The Sounds
 
-At the core of the magic is the `sounds` array at the top of `soundboard.js`:
+At the core of the magic is the `sounds` array at the top of `assets/soundboard.js`:
 
 ```js
 const sounds = [
-    {fileName: 'pew-pew.mp3',        label: 'Pew Pew',        shortkey: 'a', creatorMicro: true},
-    {fileName: 'whoopsie-daisy.mp3', label: 'Whoopsie Daisy', shortkey: 'b', creatorMicro: false},
-    {fileName: 'kaboom.mp3',         label: 'Kaboom!',         shortkey: 'c', creatorMicro: true},
+    {label: 'Pew Pew',        fileName: 'pew-pew.mp3',        creatorMicro: true},
+    {label: 'Whoopsie Daisy', fileName: 'whoopsie-daisy.mp3', creatorMicro: false},
+    {label: 'Kaboom!',        fileName: 'kaboom.mp3',          creatorMicro: true},
 ];
 ```
 
 | Field | Description |
 |-------|-------------|
-| `fileName` | Must match a file in the `.fx/` folder |
 | `label` | Display name on the button |
-| `shortkey` | Single keyboard key (lowercase) to trigger the sound |
+| `fileName` | Must match a file in the `fx/` folder |
 | `creatorMicro` | `true` adds a dot indicator for the Work Loud Creator Micro hardware (visual only) |
 
-Spacebar triggers a random sound.
+Shortkeys are auto-assigned by position: index 0 → `a`, index 1 → `b`, and so on. Spacebar triggers a random sound.
 
 ### Adding sounds
 
-1. Drop your `.mp3` files into the `.fx/` folder
-2. Add an entry to the `sounds` array in `soundboard.js`
+1. Drop your `.mp3` files into the `fx/` folder
+2. Add an entry to the `sounds` array in `assets/soundboard.js`
 3. Reload the page
 
 ### Layout
