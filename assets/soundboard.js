@@ -72,7 +72,6 @@ function iFeelLucky() {
 }
 
 function keypressToIndex(key) {
-    if (key === ' ') { iFeelLucky(); return; }
     const index = key.charCodeAt(0) - 97;
     if (index >= 0 && index < sounds.length) playSound(index);
 }
@@ -83,5 +82,9 @@ sounds.forEach((sound, index) => {
     soundboardButtons.push(button);
 });
 
-document.addEventListener('keydown', event => keypressToIndex(event.key.toLowerCase()));
+document.addEventListener('keydown', event => {
+    if (event.key.length === 1 && /^[a-z]$/i.test(event.key)) {
+        keypressToIndex(event.key.toLowerCase());
+    }
+});
 document.querySelector('#randomizer').addEventListener('click', () => iFeelLucky());
