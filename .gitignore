@@ -1,1 +1,4 @@
-/fx/*.mp3
+/.fx/*.mp3
+/.fx/*.json
+/.fx-archive/
+CLAUDE.md

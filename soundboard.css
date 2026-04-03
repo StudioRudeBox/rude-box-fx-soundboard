@@ -1,0 +1,141 @@
+@keyframes wiggle {
+    0%,
+    100% { transform: rotate(0deg);  }
+    10%  { transform: rotate(2deg);  }
+    20%,
+    40%,
+    60%  { transform: rotate(-4deg); }
+    30%,
+    50%,
+    70%  { transform: rotate(4deg);  }
+    80%  { transform: rotate(-2deg); }
+    90%  { transform: rotate(2deg);  }
+}
+
+:root {
+    font-size           : 100%;
+    --font-size         : 1rem;
+    --size-button       : 10rem;
+    --size-gap          : 0.5rem;
+    --size-border-radius: 1em;
+    --color-background  : rgba(18, 18, 18, 1);
+    --color-font        : rgba(255, 255, 255, 0.9);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "DM Sans", sans-serif;
+    font-size: var(--font-size);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 1rem;
+    background: var(--color-background);
+    transition: font-size 0.2s ease-out;
+    position: relative;
+    overflow: hidden;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+        radial-gradient(ellipse 60% 50% at 15% 30%,  rgba(207, 61, 210, 0.45) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 60% at 85% 15%,  rgba(255, 77, 81, 0.3)   0%, transparent 70%),
+        radial-gradient(ellipse 55% 45% at 70% 85%,  rgba(242, 123, 30, 0.25) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 50% at 30% 75%,  rgba(60, 186, 146, 0.2)  0%, transparent 70%);
+    filter: blur(80px);
+}
+
+button {
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    row-gap: 2rem;
+}
+
+#soundboard {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--size-gap);
+}
+
+#soundboard button {
+    position: relative;
+    font-family: "DM Sans", sans-serif;
+    width: var(--size-button);
+    height: var(--size-button);
+    padding: 2em;
+    font-size: var(--font-size);
+    font-weight: 300;
+    background: rgba(255, 255, 255, 0.07);
+    color: var(--color-font);
+    border: none;
+    border-radius: var(--size-border-radius);
+    transition: background 0.25s ease-in-out;
+}
+
+#soundboard button:not(.is-playing):hover {
+    background: linear-gradient(70deg, rgba(207, 61, 210, 1) -0.25%, rgba(255, 77, 81, 1) 49.26%, rgba(242, 123, 30, 1) 100%);
+    box-shadow: 0px 0px 50px 0px rgba(207, 61, 210, 0.7);
+}
+
+#soundboard button.is-playing {
+    background: linear-gradient(to top, rgba(11, 163, 96, 1) 0%, rgba(60, 186, 146, 1) 100%);
+    box-shadow: 0px 0px 50px 0px rgba(60, 186, 146, 0.7);
+}
+
+#soundboard button .shortkey {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    font-weight: 800;
+    opacity: 0.25;
+}
+
+#soundboard button.creator-micro::after {
+    content: '';
+    position: absolute;
+    bottom: 0.75rem;
+    right: 0.75rem;
+    width: 0.75em;
+    height: 0.75em;
+    border-radius: 1rem;
+    background-color: var(--color-font);
+    opacity: 0.5;
+}
+
+#randomizer {
+    width: 2.5rem;
+    height: auto;
+    color: var(--color-font);
+}
+
+#randomizer:hover {
+    animation: wiggle 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
+}
+
+@media (min-width: 64em) {
+    #soundboard {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        justify-content: center;
+    }
+}
